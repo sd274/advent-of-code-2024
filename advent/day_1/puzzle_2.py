@@ -9,8 +9,7 @@ class Day1Puzzle2(PuzzleBase):
         second_list_counter = Counter(second_list)
         counts = [x * second_list_counter.get(x, 0) for x in first_list]
         answer = sum(counts)
-        print(f"Answer: {answer:.0f}")
-
+        return answer
 
     def get_data(self, sample: bool) -> tuple[list[int], list[int]]:
         raw_data = self._load_data(sample)

@@ -4,13 +4,13 @@ from advent import PuzzleBase
 
 
 class Day3Puzzle1(PuzzleBase):
-    def run(self, sample: bool):
+    def run(self, sample: bool) -> int:
         reports = self.get_data(sample)
         match_str = r"mul\(\d+,\d+\)"
         matches = re.findall(match_str, reports) or []
         multiplications = [self._process_multi(x) for x in matches]
         answer = sum(multiplications)
-        print(f"Answer: {answer:.0f}")
+        return answer
 
     def _process_multi(self, x: str) -> int:
         striped = x.replace("mul(", "").replace(")", "")

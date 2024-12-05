@@ -9,7 +9,7 @@ class Day1Puzzle1(PuzzleBase):
         second_list_sorted = sorted(second_list)
         differences = [abs(x - y) for x, y in zip(first_list_sorted, second_list_sorted)]
         total_differences = sum(differences)
-        print(f"Answer: {total_differences:.0f}")
+        return total_differences
 
     def get_data(self, sample: bool) -> tuple[list[int], list[int]]:
         raw_data = self._load_data(sample)

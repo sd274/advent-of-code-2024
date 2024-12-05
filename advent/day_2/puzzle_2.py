@@ -7,7 +7,7 @@ class Day2Puzzle2(PuzzleBase):
         reports = self.get_data(sample)
         safe_reports = [self._is_safe(line) for line in reports]
         answer = sum(safe_reports)
-        print(f"Answer: {answer:.0f}")
+        return answer
 
     def _is_safe(self, line: list[int]) -> bool:
         full_safe = self._is_list_safe(line)
