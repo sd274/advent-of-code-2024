@@ -1,0 +1,41 @@
+[tool.poetry]
+authors = ["Stuart Day" ]
+description = "Advent of code 2024" 
+name = "advent-of-code" 
+package-mode = false # we only want to use poetry for dependency management
+packages = []
+readme = "README.md"
+
+
+[tool.poetry.dependencies]
+python = "~3.12"
+
+[tool.poetry.group.dev]
+optional = true
+
+[tool.poetry.group.dev.dependencies]
+rich = "^13.8.0"
+ruff = "^0.6.3"
+ruff-lsp = "^0.0.55"
+pandas = "^2.2.3"
+
+
+[tool.pyright]
+deprecateTypingAliases = true
+include = ["advent"]
+pythonPlatform = "All"
+pythonVersion = "3.12"
+reportDeprecated = true
+reportMissingImports = true
+reportMissingTypeStubs = false
+reportUnnecessaryComparison = true
+typeCheckingMode = "strict"
+
+[[tool.pyright.executionEnvironments]]
+extraPaths = ["."]
+reportPrivateUsage = false
+root = "tests/unit"
+
+[build-system]
+build-backend = "poetry.core.masonry.api"
+requires = ["poetry-core==1.8.0"]
