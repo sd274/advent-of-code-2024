@@ -5,9 +5,6 @@ from advent import PuzzleBase
 class Day4Puzzle1(PuzzleBase):
     def run(self, sample: bool) -> int:
         data = self.get_data(sample)
-        print(f" : {' '.join(str(i) for i in range(len(data[0])))}")
-        for lin_num, line in enumerate(data):
-            print(f"{lin_num:,.0f}: {' '.join(x for x in line)}")
         word_to_match = "xmas"
         starting_locs = [
             (i, j)
@@ -24,7 +21,6 @@ class Day4Puzzle1(PuzzleBase):
     def _count_matches(
         self, starting_loc: tuple[int, int], data: list[list[str]], word_to_match: str
     ) -> int:
-        print(starting_loc)
         word_len = len(word_to_match)
         right_word = self._extract_right_word(starting_loc, data, word_len)
         total = 0
@@ -37,24 +33,65 @@ class Day4Puzzle1(PuzzleBase):
         if down_word == word_to_match:
             total += 1
         up_word = self._extract_up_word(starting_loc, data, word_len)
-        print(f"up word: {up_word}")
         if up_word == word_to_match:
             total += 1
-        print(total)
-        print("---" * 19)
+
+        right_up_word = self._extract_right_up_word(starting_loc, data, word_len)
+        if right_up_word == word_to_match:
+            total += 1
+        right_down_word = self._extract_right_down_word(starting_loc, data, word_len)
+        if right_down_word == word_to_match:
+            total += 1
+        left_down_word = self._extract_left_down_word(starting_loc, data, word_len)
+        if left_down_word == word_to_match:
+            total += 1
+        left_up_word = self._extract_left_up_word(starting_loc, data, word_len)
+        if left_up_word == word_to_match:
+            total += 1
 
         return total
+    def _extract_left_up_word(
+        self, starting_loc: tuple[int, int], data: list[list[str]], word_len: int
+    ) -> str:
+        return "".join(
+            data[starting_loc[0] - i][starting_loc[1] + i]
+            for i in range(word_len)
+            if starting_loc[0] - i >= 0 and starting_loc[1] + i < len(data[0])
+        )
+
+    def _extract_left_down_word(
+        self, starting_loc: tuple[int, int], data: list[list[str]], word_len: int
+    ) -> str:
+        return "".join(
+            data[starting_loc[0] - i][starting_loc[1] - i]
+            for i in range(word_len)
+            if starting_loc[0] - i >= 0 and starting_loc[1] - i >= 0
+        )
+    def _extract_right_up_word(
+        self, starting_loc: tuple[int, int], data: list[list[str]], word_len: int
+    ) -> str:
+        return "".join(
+            data[starting_loc[0] + i][starting_loc[1] + i]
+            for i in range(word_len)
+            if starting_loc[0] + i < len(data[0]) and starting_loc[1] + i < len(data)
+        )
+
+    def _extract_right_down_word(
+        self, starting_loc: tuple[int, int], data: list[list[str]], word_len: int
+    ) -> str:
+        return "".join(
+            data[starting_loc[0] + i][starting_loc[1] - i]
+            for i in range(word_len)
+            if starting_loc[0] + i < len(data[0]) and starting_loc[1] - i >= 0
+        )
 
     def _extract_up_word(
         self, starting_loc: tuple[int, int], data: list[list[str]], word_len: int
     ) -> str:
         return "".join(
-            data[starting_loc[0] - word_len + i][starting_loc[1]]
-            for i in range(word_len + 1)
-            if (
-                starting_loc[0] + i - word_len >= 0
-                and starting_loc[0] + i - word_len + 1 < len(data[0])
-            )
+            data[starting_loc[0] - i][starting_loc[1]]
+            for i in range(word_len)
+            if (starting_loc[0] - i >= 0)
         )
 
     def _extract_down_word(
@@ -69,15 +106,20 @@ class Day4Puzzle1(PuzzleBase):
     def _extract_right_word(
         self, starting_loc: tuple[int, int], data: list[list[str]], word_len: int
     ) -> str:
-        line = data[starting_loc[0]]
-        return "".join(line[starting_loc[1] : starting_loc[1] + word_len])
+        return ''.join(
+            data[starting_loc[0]][starting_loc[1] + i]
+            for i in range(word_len)
+            if starting_loc[1] + i < len(data[0])
+        )
 
     def _extract_left_word(
         self, starting_loc: tuple[int, int], data: list[list[str]], word_len: int
     ) -> str:
-        line = data[starting_loc[0]]
-        characters = line[max(0, starting_loc[0] - word_len) : starting_loc[0]]
-        return "".join(characters)
+        return ''.join(
+            data[starting_loc[0]][starting_loc[1] - i]
+            for i in range(word_len)
+            if starting_loc[1] - 1 >= 0
+        )
 
     def get_data(self, sample: bool) -> list[list[str]]:
         raw_data = self._load_data(sample)
