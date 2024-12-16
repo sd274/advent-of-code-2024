@@ -12,8 +12,9 @@ from advent.day_3.puzzle_2 import Day3Puzzle2
 from advent.day_4.puzzle_1 import Day4Puzzle1
 from advent.day_4.puzzle_2 import Day4Puzzle2
 from advent.day_5.puzzle_1 import Day5Puzzle1
+from advent.day_6.puzzle_1 import Day6Puzzle1
 
-type supportedDays = Literal[1, 2, 3, 4, 5]
+type supportedDays = Literal[1, 2, 3, 4, 5, 6]
 
 
 def main(day: supportedDays, sample: bool, puzzle: Literal[1, 2]):
@@ -49,6 +50,12 @@ def main(day: supportedDays, sample: bool, puzzle: Literal[1, 2]):
                     to_run = Day5Puzzle1()
                 case 2:
                     to_run = Day5Puzzle1()
+        case 6:
+            match puzzle:
+                case 1:
+                    to_run = Day6Puzzle1()
+                case 2:
+                    to_run = Day6Puzzle1()
     ans = to_run.run(sample=sample)
     print(f"    - Answer: {ans:.0f}\n\n")
 

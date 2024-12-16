@@ -1,5 +1,6 @@
 from collections import defaultdict
 import os
+from typing import dataclass_transform
 from advent import PuzzleBase
 
 type UpdateRule = defaultdict[int, list[int]]
